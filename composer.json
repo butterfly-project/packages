@@ -1,0 +1,25 @@
+{
+    "name": "butterfly/packages",
+    "type": "library",
+    "description": "Butterfly PHP. Packages Component",
+    "keywords": ["package"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marat Fakhertdinov",
+            "email": "marat.fakhertdinov@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+
+        "butterfly/config": "1.0.*",
+        "butterfly/dependency-injection": "1.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Butterfly\\Component\\Packages\\": "src/",
+            "Butterfly\\Component\\Packages\\Tests\\": "tests/unit/"
+        }
+    }
+}
