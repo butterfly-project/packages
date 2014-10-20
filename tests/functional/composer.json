@@ -1,0 +1,18 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:butterfly-project/packages.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+
+        "butterfly/packages": "dev-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Butterfly\\Tests\\": "tests/"
+        }
+    }
+}
