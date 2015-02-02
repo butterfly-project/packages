@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.1.1
+-----
+
+Added functionality:
+
+ * Fix bug for autowired configuration of class constructor
+
 1.1.0
 -----
 

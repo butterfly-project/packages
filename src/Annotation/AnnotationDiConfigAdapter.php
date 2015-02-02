@@ -83,18 +83,13 @@ class AnnotationDiConfigAdapter
                 continue;
             }
 
+            $arguments = null;
             if (null === $methodAnnotation['autowired']) {
                 $reflectionMethod = $reflectionClass->getMethod($methodName);
 
                 $arguments = $this->getMethodTypesForNative($reflectionMethod->getParameters());
 
-                if (null !== $arguments) {
-                    $configuration['calls'][] = array($methodName, $arguments);
-
-                    continue;
-                }
-
-                if (!empty($methodAnnotation['param'])) {
+                if (null === $arguments && !empty($methodAnnotation['param'])) {
                     $arguments = array();
                     foreach ($methodAnnotation['param'] as $value) {
                         $words = array_filter(explode(' ', $value));
@@ -102,18 +97,21 @@ class AnnotationDiConfigAdapter
                         $fullNamespace = $reflectionClass->getFullNamespace($shortType);
                         $arguments[] = '@' . substr($fullNamespace, 1);
                     }
-
-                    $configuration['calls'][] = array($methodName, $arguments);
                 }
             } elseif (is_array($methodAnnotation['autowired'])) {
-
                 $arguments = array();
 
                 foreach ($methodAnnotation['autowired'] as $dependency) {
                     $arguments[] = ('%' != $dependency[0]) ? '@' . $dependency : $dependency;
                 }
+            }
 
-                $configuration['calls'][] = array($methodName, $arguments);
+            if (null !== $arguments) {
+                if ('__construct' == $methodName) {
+                    $configuration['arguments'] = $arguments;
+                } else {
+                    $configuration['calls'][] = array($methodName, $arguments);
+                }
             }
         }
 
