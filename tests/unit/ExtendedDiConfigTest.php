@@ -48,32 +48,32 @@ class ExtendedDiConfigTest extends \PHPUnit_Framework_TestCase
             'services'   => array(
                 'service1' => array(
                     'class' => 'Foo\Service1',
-                    'alias' => 'Foo\Service1',
+                    'alias' => 'foo\service1',
                 ),
                 'service2' => array(
                     'class' => 'Baz\Service2',
-                    'alias' => 'Baz\Service2',
+                    'alias' => 'baz\service2',
                 ),
                 'service3' => array(
                     'class' => 'Baz\Old\Service3',
-                    'alias' => 'Baz\Old\Service3',
+                    'alias' => 'baz\old\service3',
                 ),
                 'service4' => array(
                     'class' => 'Bar\Service4',
-                    'alias' => 'Bar\Service4',
+                    'alias' => 'bar\service4',
                 ),
                 'service5' => array(
                     'class' => 'Project\Service5',
-                    'alias' => 'Project\Service5',
+                    'alias' => 'project\service5',
                 ),
             ),
             'interfaces' => array(),
             'aliases'    => array(
-                'Foo\Service1'     => 'service1',
-                'Baz\Service2'     => 'service2',
-                'Baz\Old\Service3' => 'service3',
-                'Bar\Service4'     => 'service4',
-                'Project\Service5' => 'service5',
+                'foo\service1'     => 'service1',
+                'baz\service2'     => 'service2',
+                'baz\old\service3' => 'service3',
+                'bar\service4'     => 'service4',
+                'project\service5' => 'service5',
             ),
             'tags'       => array(),
         );

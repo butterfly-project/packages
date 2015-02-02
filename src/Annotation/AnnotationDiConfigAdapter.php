@@ -51,10 +51,12 @@ class AnnotationDiConfigAdapter
 
         if (null !== $classAnnotation['class']['service']) {
             $serviceName = $classAnnotation['class']['service'];
-            $configuration['alias'] = $className;
+            $configuration['alias'] = strtolower($className);
         } else {
             $serviceName = $className;
         }
+
+        $serviceName = strtolower($serviceName);
 
         $configuration['class'] = $className;
 
@@ -70,7 +72,7 @@ class AnnotationDiConfigAdapter
             } elseif (null === $propertyAnnotation['autowired']) {
                 $namespace = $reflectionClass->getFullNamespace($propertyAnnotation['var']);
                 $innerServiceName = substr($namespace, 1);
-                $configuration['properties'][$propertyName] = $innerServiceName;
+                $configuration['properties'][$propertyName] = strtolower($innerServiceName);
             } else {
                 $words = explode(' ', $propertyAnnotation['autowired']);
                 $innerServiceName = reset($words);
@@ -92,10 +94,10 @@ class AnnotationDiConfigAdapter
                 if (null === $arguments && !empty($methodAnnotation['param'])) {
                     $arguments = array();
                     foreach ($methodAnnotation['param'] as $value) {
-                        $words = array_filter(explode(' ', $value));
-                        $shortType = array_shift($words);
-                        $fullNamespace = $reflectionClass->getFullNamespace($shortType);
-                        $arguments[] = '@' . substr($fullNamespace, 1);
+                        $words         = array_filter(explode(' ', $value));
+                        $shortType     = array_shift($words);
+                        $fullNamespace = strtolower($reflectionClass->getFullNamespace($shortType));
+                        $arguments[]   = '@' . substr($fullNamespace, 1);
                     }
                 }
             } elseif (is_array($methodAnnotation['autowired'])) {
@@ -144,7 +146,7 @@ class AnnotationDiConfigAdapter
                 return null;
             }
 
-            $innerServiceName     = '@' . $nativeTypeClass->getName();
+            $innerServiceName     = '@' . strtolower($nativeTypeClass->getName());
             $arguments[$position] = $innerServiceName;
         }
 
