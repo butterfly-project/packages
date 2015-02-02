@@ -140,6 +140,20 @@ class AnnotationDiConfigAdapterTest extends \PHPUnit_Framework_TestCase
                 ),
             ))),
 
+            // Example 10. constructor
+            array(__DIR__ . '/Stub/Annotation/Example10', array('services' => array(
+                "$baseNamespace\\Example10\\DirA\\InnerService" => array(
+                    'class' => "$baseNamespace\\Example10\\DirA\\InnerService",
+                ),
+                'service.base' => array(
+                    'class' => "$baseNamespace\\Example10\\Service",
+                    'alias' => "$baseNamespace\\Example10\\Service",
+                    'arguments' => array(
+                        '@service.inner',
+                    ),
+                ),
+            ))),
+
         );
     }
 
