@@ -11,13 +11,14 @@ class AnnotationDiConfigAdapterTest extends \PHPUnit_Framework_TestCase
 {
     public function getDataForTestExtractDiConfiguration()
     {
-        $baseNamespace = 'Butterfly\Component\Packages\Tests\Annotation\Stub\Annotation';
+        $baseNamespace  = 'Butterfly\Component\Packages\Tests\Annotation\Stub\Annotation';
+        $lowerNamespace = strtolower($baseNamespace);
 
         return array(
 
             // Example 1. not named service
             array(__DIR__ . '/Stub/Annotation/Example1', array('services' => array(
-                "$baseNamespace\\Example1\\Service" => array(
+                "$lowerNamespace\\example1\\service" => array(
                     'class' => "$baseNamespace\\Example1\\Service",
                 ),
             ))),
@@ -26,20 +27,20 @@ class AnnotationDiConfigAdapterTest extends \PHPUnit_Framework_TestCase
             array(__DIR__ . '/Stub/Annotation/Example2', array('services' => array(
                 'service.base' => array(
                     'class' => "$baseNamespace\\Example2\\Service",
-                    'alias' => "$baseNamespace\\Example2\\Service",
+                    'alias' => "$lowerNamespace\\example2\\service",
                 ),
             ))),
 
             // Example 3. property for type
             array(__DIR__ . '/Stub/Annotation/Example3', array('services' => array(
-                "$baseNamespace\\Example3\\DirA\\InnerService" => array(
+                "$lowerNamespace\\example3\\dira\\innerservice" => array(
                     'class' => "$baseNamespace\\Example3\\DirA\\InnerService",
                 ),
                 'service.base' => array(
                     'class' => "$baseNamespace\\Example3\\Service",
-                    'alias' => "$baseNamespace\\Example3\\Service",
+                    'alias' => "$lowerNamespace\\example3\\service",
                     'properties' => array(
-                        'inner' => "$baseNamespace\\Example3\\DirA\\InnerService",
+                        'inner' => "$lowerNamespace\\example3\\dira\\innerservice",
                     ),
                 ),
             ))),
@@ -48,7 +49,7 @@ class AnnotationDiConfigAdapterTest extends \PHPUnit_Framework_TestCase
             array(__DIR__ . '/Stub/Annotation/Example4', array('services' => array(
                 'service.base' => array(
                     'class' => "$baseNamespace\\Example4\\Service",
-                    'alias' => "$baseNamespace\\Example4\\Service",
+                    'alias' => "$lowerNamespace\\example4\\service",
                     'properties' => array(
                         'innerService'  => "service.inner",
                         'innerProperty' => "parameter.inner",
@@ -58,19 +59,19 @@ class AnnotationDiConfigAdapterTest extends \PHPUnit_Framework_TestCase
 
             // Example 5. methods for types
             array(__DIR__ . '/Stub/Annotation/Example5', array('services' => array(
-                "$baseNamespace\\Example5\\DirA\\InnerService" => array(
+                "$lowerNamespace\\example5\\dira\\innerservice" => array(
                     'class' => "$baseNamespace\\Example5\\DirA\\InnerService",
                 ),
-                "$baseNamespace\\Example5\\DirA\\Inner2Service" => array(
+                "$lowerNamespace\\example5\\dira\\inner2service" => array(
                     'class' => "$baseNamespace\\Example5\\DirA\\Inner2Service",
                 ),
                 'service.base' => array(
                     'class' => "$baseNamespace\\Example5\\Service",
-                    'alias' => "$baseNamespace\\Example5\\Service",
+                    'alias' => "$lowerNamespace\\example5\\service",
                     'calls' => array(
                         array('init', array(
-                            "@$baseNamespace\\Example5\\DirA\\InnerService",
-                            "@$baseNamespace\\Example5\\DirA\\Inner2Service",
+                            "@$lowerNamespace\\example5\\dira\\innerservice",
+                            "@$lowerNamespace\\example5\\dira\\inner2service",
                         )),
                     ),
                 ),
@@ -78,19 +79,19 @@ class AnnotationDiConfigAdapterTest extends \PHPUnit_Framework_TestCase
 
             // Example 6. methods for phpDoc types
             array(__DIR__ . '/Stub/Annotation/Example6', array('services' => array(
-                "$baseNamespace\\Example6\\DirA\\InnerService" => array(
+                "$lowerNamespace\\example6\\dira\\innerservice" => array(
                     'class' => "$baseNamespace\\Example6\\DirA\\InnerService",
                 ),
-                "$baseNamespace\\Example6\\DirA\\Inner2Service" => array(
+                "$lowerNamespace\\example6\\dira\\inner2service" => array(
                     'class' => "$baseNamespace\\Example6\\DirA\\Inner2Service",
                 ),
                 'service.base' => array(
                     'class' => "$baseNamespace\\Example6\\Service",
-                    'alias' => "$baseNamespace\\Example6\\Service",
+                    'alias' => "$lowerNamespace\\example6\\service",
                     'calls' => array(
                         array('init', array(
-                            "@$baseNamespace\\Example6\\DirA\\InnerService",
-                            "@$baseNamespace\\Example6\\DirA\\Inner2Service",
+                            "@$lowerNamespace\\example6\\dira\\innerservice",
+                            "@$lowerNamespace\\example6\\dira\\inner2service",
                         )),
                     ),
                 ),
@@ -98,15 +99,15 @@ class AnnotationDiConfigAdapterTest extends \PHPUnit_Framework_TestCase
 
             // Example 7. methods for autowired annotation
             array(__DIR__ . '/Stub/Annotation/Example7', array('services' => array(
-                "$baseNamespace\\Example7\\DirA\\InnerService" => array(
+                "$lowerNamespace\\example7\\dira\\innerservice" => array(
                     'class' => "$baseNamespace\\Example7\\DirA\\InnerService",
                 ),
-                "$baseNamespace\\Example7\\DirA\\Inner2Service" => array(
+                "$lowerNamespace\\example7\\dira\\inner2service" => array(
                     'class' => "$baseNamespace\\Example7\\DirA\\Inner2Service",
                 ),
                 'service.base' => array(
                     'class' => "$baseNamespace\\Example7\\Service",
-                    'alias' => "$baseNamespace\\Example7\\Service",
+                    'alias' => "$lowerNamespace\\example7\\service",
                     'calls' => array(
                         array('init', array(
                             "@service.inner",
@@ -121,12 +122,12 @@ class AnnotationDiConfigAdapterTest extends \PHPUnit_Framework_TestCase
             array(__DIR__ . '/Stub/Annotation/Example8', array('services' => array(
                 'service.base' => array(
                     'class' => "$baseNamespace\\Example8\\Service",
-                    'alias' => "$baseNamespace\\Example8\\Service",
+                    'alias' => "$lowerNamespace\\example8\\service",
                     'tags' => array('tagA'),
                 ),
                 'service.base2' => array(
                     'class' => "$baseNamespace\\Example8\\Service2",
-                    'alias' => "$baseNamespace\\Example8\\Service2",
+                    'alias' => "$lowerNamespace\\example8\\service2",
                     'tags' => array('tagA', 'tagB'),
                 ),
             ))),
@@ -135,19 +136,19 @@ class AnnotationDiConfigAdapterTest extends \PHPUnit_Framework_TestCase
             array(__DIR__ . '/Stub/Annotation/Example9', array('services' => array(
                 'service.base' => array(
                     'class' => "$baseNamespace\\Example9\\Service",
-                    'alias' => "$baseNamespace\\Example9\\Service",
+                    'alias' => "$lowerNamespace\\example9\\service",
                     'scope' => 'prototype',
                 ),
             ))),
 
             // Example 10. constructor
             array(__DIR__ . '/Stub/Annotation/Example10', array('services' => array(
-                "$baseNamespace\\Example10\\DirA\\InnerService" => array(
+                "$lowerNamespace\\example10\\dira\\innerservice" => array(
                     'class' => "$baseNamespace\\Example10\\DirA\\InnerService",
                 ),
                 'service.base' => array(
                     'class' => "$baseNamespace\\Example10\\Service",
-                    'alias' => "$baseNamespace\\Example10\\Service",
+                    'alias' => "$lowerNamespace\\example10\\service",
                     'arguments' => array(
                         '@service.inner',
                     ),
