@@ -13,6 +13,7 @@ class ComposerConfigAdapter
 
     protected $diConfigs = array();
     protected $packagesConfigs = array();
+    protected $annotationDirs = array();
 
     /**
      * @param string $baseDir
@@ -27,24 +28,34 @@ class ComposerConfigAdapter
 
     protected function init()
     {
-        $mainConfig        = $this->parseJsonFile($this->baseDir . '/composer.json');
-        $componentsConfigs = $this->parseJsonFile($this->vendorDir . '/composer/installed.json');
+        $mainConfig      = $this->parseJsonFile($this->baseDir . '/composer.json');
+        $packagesConfigs = $this->parseJsonFile($this->vendorDir . '/composer/installed.json');
 
         $this->packagesConfigs[self::PROJECT_COMPONENT_NAME] = array(
             'dir' => $this->baseDir
         );
-        foreach ($componentsConfigs as $config) {
+        foreach ($packagesConfigs as $config) {
             $this->packagesConfigs[$config['name']] = array(
                 'dir' => $this->vendorDir . $this->getPackageDir($config),
             );
         }
 
-        $this->diConfigs = $this->calcDiConfigsPaths($componentsConfigs);
+        $packagesConfigs = $this->sortConfigs($packagesConfigs);
+
+        $this->diConfigs      = $this->calcDiConfigsPaths($packagesConfigs);
+        $this->annotationDirs = $this->calcAnnotationDirs($packagesConfigs);
 
         $diConfig = $this->calcDiConfigPath($this->baseDir, $mainConfig);
 
         if (null !== $diConfig) {
             $this->diConfigs[] = $diConfig;
+        }
+
+        if ($this->hasAnnotationSection($mainConfig)) {
+            foreach ($mainConfig['annotations'] as $dir) {
+                $this->annotationDirs[] = $this->baseDir . '/' . $dir;
+            }
+
         }
     }
 
@@ -55,10 +66,9 @@ class ComposerConfigAdapter
      */
     protected function calcDiConfigsPaths(array $packagesConfigs)
     {
-        $sortedConfigs = $this->sortConfigs($packagesConfigs);
-
         $diConfigs = array();
-        foreach ($sortedConfigs as $config) {
+
+        foreach ($packagesConfigs as $config) {
             $packageDir = $this->vendorDir . $this->getPackageDir($config);
             $configPath = $this->calcDiConfigPath($packageDir, $config);
 
@@ -73,14 +83,48 @@ class ComposerConfigAdapter
     }
 
     /**
+     * @param array $packagesConfigs
+     * @return array
+     */
+    protected function calcAnnotationDirs(array $packagesConfigs)
+    {
+        $annotationDirs = array();
+
+        foreach ($packagesConfigs as $config) {
+            if (!$this->hasAnnotationSection($config)) {
+                continue;
+            }
+
+            $packageDir = $this->vendorDir . $this->getPackageDir($config);
+
+            foreach ($config['annotations'] as $annotationDir) {
+                $annotationDirs[] = $packageDir . '/' . $annotationDir;
+            }
+        }
+
+        return $annotationDirs;
+    }
+
+    /**
+     * @param array $packagesConfig
+     * @return bool
+     */
+    protected function hasAnnotationSection(array $packagesConfig)
+    {
+        return !empty($packagesConfig['annotations']) && is_array($packagesConfig['annotations']);
+    }
+
+    /**
      * @param array $composerConfig
      * @return array
      */
     protected function sortConfigs(array $composerConfig)
     {
-        usort($composerConfig, function ($a, $b) {
-            $aPriority = isset($a['priority']) ? $a['priority'] : self::DEFAULT_PRIORITY;
-            $bPriority = isset($b['priority']) ? $b['priority'] : self::DEFAULT_PRIORITY;
+        $self = $this;
+
+        usort($composerConfig, function ($a, $b) use ($self) {
+            $aPriority = isset($a['priority']) ? $a['priority'] : $self::DEFAULT_PRIORITY;
+            $bPriority = isset($b['priority']) ? $b['priority'] : $self::DEFAULT_PRIORITY;
 
             return ($aPriority > $bPriority) ? 1 : -1;
         });
@@ -157,5 +201,13 @@ class ComposerConfigAdapter
     public function getDiConfigs()
     {
         return $this->diConfigs;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAnnotationDirs()
+    {
+        return $this->annotationDirs;
     }
 }
