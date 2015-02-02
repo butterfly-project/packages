@@ -1,3 +1,4 @@
 {
-    "name": "me/test"
+    "name": "me/test",
+    "annotations": ["src"]
 }

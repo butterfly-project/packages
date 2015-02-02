@@ -45,9 +45,36 @@ class ExtendedDiConfigTest extends \PHPUnit_Framework_TestCase
                     ),
                 ),
             ),
-            'services'   => array(),
+            'services'   => array(
+                'service1' => array(
+                    'class' => 'Foo\Service1',
+                    'alias' => 'Foo\Service1',
+                ),
+                'service2' => array(
+                    'class' => 'Baz\Service2',
+                    'alias' => 'Baz\Service2',
+                ),
+                'service3' => array(
+                    'class' => 'Baz\Old\Service3',
+                    'alias' => 'Baz\Old\Service3',
+                ),
+                'service4' => array(
+                    'class' => 'Bar\Service4',
+                    'alias' => 'Bar\Service4',
+                ),
+                'service5' => array(
+                    'class' => 'Project\Service5',
+                    'alias' => 'Project\Service5',
+                ),
+            ),
             'interfaces' => array(),
-            'aliases'    => array(),
+            'aliases'    => array(
+                'Foo\Service1'     => 'service1',
+                'Baz\Service2'     => 'service2',
+                'Baz\Old\Service3' => 'service3',
+                'Bar\Service4'     => 'service4',
+                'Project\Service5' => 'service5',
+            ),
             'tags'       => array(),
         );
     }

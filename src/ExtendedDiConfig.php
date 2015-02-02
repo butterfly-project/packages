@@ -2,9 +2,13 @@
 
 namespace Butterfly\Component\Packages;
 
+use Butterfly\Component\Annotations\ClassParser;
+use Butterfly\Component\Annotations\FileLoader\FileLoader;
+use Butterfly\Component\Annotations\Parser\PhpDocParser;
 use Butterfly\Component\Config\ConfigBuilder;
 use Butterfly\Component\DI\Builder\DiConfig;
 use Butterfly\Component\DI\Container;
+use Butterfly\Component\Packages\Annotation\AnnotationDiConfigAdapter;
 
 class ExtendedDiConfig extends DiConfig
 {
@@ -32,6 +36,11 @@ class ExtendedDiConfig extends DiConfig
             self::PARAMETER_PACKAGES_CONFIG => $composerAdapter->getPackagesConfigs(),
         ));
 
+        $annotationPaths = $composerAdapter->getAnnotationDirs();
+        foreach ($annotationPaths as $annotationPath) {
+            $configBuilder->addConfiguration(self::getDiConfigurationFromAnnotations($annotationPath));
+        }
+
         self::build($configBuilder->getData(), $output);
     }
 
@@ -57,5 +66,19 @@ class ExtendedDiConfig extends DiConfig
         foreach ($paths as $path) {
             $builder->addPath($path);
         }
+    }
+
+    /**
+     * @param string $annotationsDir
+     * @return array
+     */
+    protected static function getDiConfigurationFromAnnotations($annotationsDir)
+    {
+        $annotationsParser = new ClassParser(new PhpDocParser(), new FileLoader());
+        $annotations = $annotationsParser->parseClassesInDir($annotationsDir);
+
+        $adapter = new AnnotationDiConfigAdapter();
+
+        return $adapter->extractDiConfiguration($annotations);
     }
 }

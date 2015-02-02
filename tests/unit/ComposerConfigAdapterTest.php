@@ -40,8 +40,17 @@ class ComposerConfigAdapterTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
+        $expectedAnnotationDirs = array(
+            $baseDir . '/vendor/package/foo/src',
+            $baseDir . '/vendor/package/baz/libraries',
+            $baseDir . '/vendor/package/baz/legacy',
+            $baseDir . '/vendor/package/bar/Package/Bar/src',
+            $baseDir . '/src',
+        );
+
         $this->assertEquals($expectedDiConfigs, $builder->getDiConfigs());
         $this->assertEquals($expectedPackagesConfig, $builder->getPackagesConfigs());
+        $this->assertEquals($expectedAnnotationDirs, $builder->getAnnotationDirs());
     }
 
     public function testParseConfigurationIfNotFoundComposerJson()

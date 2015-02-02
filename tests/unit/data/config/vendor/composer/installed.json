@@ -2,15 +2,18 @@
     {
         "name": "package/foo",
         "di-config": "config/foo.yml",
-        "priority": 10
+        "priority": 10,
+        "annotations": ["src"]
     },
     {
         "name": "package/bar",
         "target-dir": "Package/Bar",
-        "priority": 30
+        "priority": 30,
+        "annotations": ["src"]
     },
     {
-        "name": "package/baz"
+        "name": "package/baz",
+        "annotations": ["libraries", "legacy"]
     },
     {
         "name": "butterfly/config"
