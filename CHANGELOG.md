@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.1.2
+-----
+
+Added functionality:
+
+ * Service names and aliases moved to lower-case
+
 1.1.1
 -----
 
