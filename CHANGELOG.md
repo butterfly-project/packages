@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+1.1.3
+-----
+
+Changes:
+
+ * Update dependencies
+ * Renamed class ExtendedDiConfig to PackagesConfig
+ * Remove annotation parsers
+
 1.1.2
 -----
 
