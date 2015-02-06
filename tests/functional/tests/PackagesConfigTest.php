@@ -2,20 +2,17 @@
 
 namespace Butterfly\Tests;
 
-use Butterfly\Component\Packages\ExtendedDiConfig;
+use Butterfly\Component\Packages\PackagesConfig;
 
-class ExtendedDiConfigTest extends \PHPUnit_Framework_TestCase
+class PackagesConfigTest extends \PHPUnit_Framework_TestCase
 {
     public function testBuildForComposer()
     {
         $dir    = __DIR__ . '/config';
-        $output = $dir . '/config.php';
 
-        ExtendedDiConfig::buildForComposer($dir, $output);
+        $config = PackagesConfig::buildForComposer($dir);
 
-        $this->assertEquals($this->getExpectedConfig($dir), require $output);
-
-        unlink($output);
+        $this->assertEquals($this->getExpectedConfig($dir), $config);
     }
 
     private function getExpectedConfig($dir)
@@ -45,10 +42,11 @@ class ExtendedDiConfigTest extends \PHPUnit_Framework_TestCase
                     ),
                 ),
             ),
-            'services'   => array(),
-            'interfaces' => array(),
-            'aliases'    => array(),
-            'tags'       => array(),
+            'services'           => array(),
+            'interfaces'         => array(),
+            'interfaces_aliases' => array(),
+            'aliases'            => array(),
+            'tags'               => array(),
         );
     }
 }

@@ -2,20 +2,17 @@
 
 namespace Butterfly\Component\Packages\Tests;
 
-use Butterfly\Component\Packages\ExtendedDiConfig;
+use Butterfly\Component\Packages\PackagesConfig;
 
-class ExtendedDiConfigTest extends \PHPUnit_Framework_TestCase
+class PackagesConfigTest extends \PHPUnit_Framework_TestCase
 {
     public function testBuildForComposer()
     {
         $dir    = __DIR__ . '/data/config';
-        $output = $dir . '/config.php';
 
-        ExtendedDiConfig::buildForComposer($dir, $output);
+        $config = PackagesConfig::buildForComposer($dir);
 
-        $this->assertEquals($this->getExpectedConfig($dir), require $output);
-
-        unlink($output);
+        $this->assertEquals($this->getExpectedConfig($dir), $config);
     }
 
     private function getExpectedConfig($dir)
@@ -48,26 +45,27 @@ class ExtendedDiConfigTest extends \PHPUnit_Framework_TestCase
             'services'   => array(
                 'service1' => array(
                     'class' => 'Foo\Service1',
-                    'alias' => 'foo\service1',
+                    'alias' => array('foo\service1'),
                 ),
                 'service2' => array(
                     'class' => 'Baz\Service2',
-                    'alias' => 'baz\service2',
+                    'alias' => array('baz\service2'),
                 ),
                 'service3' => array(
                     'class' => 'Baz\Old\Service3',
-                    'alias' => 'baz\old\service3',
+                    'alias' => array('baz\old\service3'),
                 ),
                 'service4' => array(
                     'class' => 'Bar\Service4',
-                    'alias' => 'bar\service4',
+                    'alias' => array('bar\service4'),
                 ),
                 'service5' => array(
                     'class' => 'Project\Service5',
-                    'alias' => 'project\service5',
+                    'alias' => array('project\service5'),
                 ),
             ),
-            'interfaces' => array(),
+            'interfaces'         => array(),
+            'interfaces_aliases' => array(),
             'aliases'    => array(
                 'foo\service1'     => 'service1',
                 'baz\service2'     => 'service2',
