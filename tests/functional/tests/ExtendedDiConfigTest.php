@@ -2,7 +2,7 @@
 
 namespace Butterfly\Tests;
 
-use Butterfly\Component\Packages\ExtendedDiConfig;
+use Butterfly\Component\Packages\PackagesConfig;
 
 class ExtendedDiConfigTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,7 +11,7 @@ class ExtendedDiConfigTest extends \PHPUnit_Framework_TestCase
         $dir    = __DIR__ . '/config';
         $output = $dir . '/config.php';
 
-        ExtendedDiConfig::buildForComposer($dir, $output);
+        PackagesConfig::buildForComposer($dir, $output);
 
         $this->assertEquals($this->getExpectedConfig($dir), require $output);
 
