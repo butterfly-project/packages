@@ -123,8 +123,8 @@ class ComposerConfigAdapter
         $self = $this;
 
         usort($composerConfig, function ($a, $b) use ($self) {
-            $aPriority = isset($a['priority']) ? $a['priority'] : $self::DEFAULT_PRIORITY;
-            $bPriority = isset($b['priority']) ? $b['priority'] : $self::DEFAULT_PRIORITY;
+            $aPriority = isset($a['extra']['priority']) ? $a['extra']['priority'] : $self::DEFAULT_PRIORITY;
+            $bPriority = isset($b['extra']['priority']) ? $b['extra']['priority'] : $self::DEFAULT_PRIORITY;
 
             return ($aPriority > $bPriority) ? 1 : -1;
         });
