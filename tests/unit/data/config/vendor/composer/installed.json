@@ -2,13 +2,17 @@
     {
         "name": "package/foo",
         "di-config": "config/foo.yml",
-        "priority": 10,
+        "extra": {
+            "priority": 10
+        },
         "annotations": ["src"]
     },
     {
         "name": "package/bar",
         "target-dir": "Package/Bar",
-        "priority": 30,
+        "extra": {
+            "priority": 30
+        },
         "annotations": ["src"]
     },
     {

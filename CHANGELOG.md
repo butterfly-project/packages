@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.2.1
+-----
+
+Changes:
+
+ * Fix bug for package priority option
+
 1.2.0
 -----
 
