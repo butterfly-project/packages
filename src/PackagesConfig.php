@@ -16,9 +16,10 @@ class PackagesConfig
     /**
      * @param string $rootDir
      * @param array $additionalConfigPaths
+     * @param array $additionalConfiguration
      * @return array
      */
-    public static function buildForComposer($rootDir, array $additionalConfigPaths = array())
+    public static function buildForComposer($rootDir, array $additionalConfigPaths = array(), array $additionalConfiguration = array())
     {
         $composerAdapter = new ComposerConfigAdapter($rootDir);
         $configBuilder = ConfigBuilder::createInstance();
@@ -26,10 +27,10 @@ class PackagesConfig
         $configBuilder->addPaths($composerAdapter->getDiConfigs());
         $configBuilder->addPaths($additionalConfigPaths);
 
-        $configBuilder->addConfiguration(array(
+        $configBuilder->addConfiguration(array_merge(array(
             self::PARAMETER_APP_ROOT_DIR    => $rootDir,
             self::PARAMETER_PACKAGES_CONFIG => $composerAdapter->getPackagesConfigs(),
-        ));
+        ), $additionalConfiguration));
 
         $annotationPaths = $composerAdapter->getAnnotationDirs();
         foreach ($annotationPaths as $annotationDir) {
