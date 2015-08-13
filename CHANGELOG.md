@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.3.0
+-----
+
+Changes:
+
+ * Additional configuration on build for composer
+
 1.2.1
 -----
 
