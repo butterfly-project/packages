@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+2.0.0
+-----
+
+Changes:
+
+ * Upgrade dependency-injection to version 2.0.0
+
 1.3.0
 -----
 
