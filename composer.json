@@ -13,7 +13,7 @@
     "require": {
         "php": ">=5.3.3",
 
-        "butterfly/dependency-injection": "1.6.*",
+        "butterfly/dependency-injection": "~2.0",
         "butterfly/config": "1.1.*",
         "butterfly/annotations": "1.0.*"
     },
