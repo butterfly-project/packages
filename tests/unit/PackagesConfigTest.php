@@ -44,6 +44,43 @@ class PackagesConfigTest extends \PHPUnit_Framework_TestCase
                         'dir' => $dir . '/vendor/butterfly/config',
                     ),
                 ),
+                'annotations' => array(
+                    'Foo\Service1'     => array(
+                        'class'      => array(
+                            'service' => 'service1',
+                        ),
+                        'properties' => array(),
+                        'methods'    => array(),
+                    ),
+                    'Baz\Service2'     => array(
+                        'class'      => array(
+                            'service' => 'service2',
+                        ),
+                        'properties' => array(),
+                        'methods'    => array(),
+                    ),
+                    'Baz\Old\Service3' => array(
+                        'class'      => array(
+                            'service' => 'service3',
+                        ),
+                        'properties' => array(),
+                        'methods'    => array(),
+                    ),
+                    'Bar\Service4'     => array(
+                        'class'      => array(
+                            'service' => 'service4',
+                        ),
+                        'properties' => array(),
+                        'methods'    => array(),
+                    ),
+                    'Project\Service5' => array(
+                        'class'      => array(
+                            'service' => 'service5',
+                        ),
+                        'properties' => array(),
+                        'methods'    => array(),
+                    ),
+                ),
             ),
             'services'   => array(
                 'foo\service1' => array(

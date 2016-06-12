@@ -34,22 +34,36 @@ class PackagesConfig
             self::PARAMETER_PACKAGES_CONFIG => $composerAdapter->getPackagesConfigs(),
         ), $additionalConfiguration));
 
-        $annotationPaths = $composerAdapter->getAnnotationDirs();
+        $annotations = self::parseAnnotations($composerAdapter->getAnnotationDirs(), $classParser);
 
+        $configBuilder->addConfiguration(self::convertAnnotations($annotations));
+        $configBuilder->addConfiguration(array(
+            'annotations' => $annotations,
+        ));
+
+        return ConfigCompiler::compile($configBuilder->getData());
+    }
+
+    /**
+     * @param array $paths
+     * @param IClassParser $classParser
+     * @return array
+     */
+    protected static function parseAnnotations(array $paths, IClassParser $classParser)
+    {
         $classFinder = new ClassFinder(array('php'));
 
-        foreach ($annotationPaths as $annotationDir) {
-            $classes = $classFinder->findClassesInDir($annotationDir);
+        $annotations = array();
 
-            $annotations = array();
+        foreach ($paths as $path) {
+            $classes = $classFinder->findClassesInDir($path);
+
             foreach ($classes as $class) {
                 $annotations[$class] = $classParser->parseClass($class);
             }
-
-            $configBuilder->addConfiguration(self::convertAnnotations($annotations));
         }
 
-        return ConfigCompiler::compile($configBuilder->getData());
+        return $annotations;
     }
 
     /**
