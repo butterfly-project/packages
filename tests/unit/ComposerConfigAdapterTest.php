@@ -72,4 +72,12 @@ class ComposerConfigAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array(), $builder->getDiConfigs());
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testParserConfigurationIfConfigIsNotReadable()
+    {
+        new ComposerConfigAdapter(__DIR__ . '/data/config_not_di_config_fatal');
+    }
 }

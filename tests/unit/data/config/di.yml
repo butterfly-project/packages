@@ -1,1 +1,4 @@
 main.parameter: 'value1'
+services:
+  service5.alias:
+    alias: 'service5'

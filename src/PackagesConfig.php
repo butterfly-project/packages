@@ -2,7 +2,8 @@
 
 namespace Butterfly\Component\Packages;
 
-use Butterfly\Component\Annotations\ClassParser;
+use Butterfly\Component\Annotations\ClassFinder\ClassFinder;
+use Butterfly\Component\Annotations\IClassParser;
 use Butterfly\Component\Annotations\Visitor\AnnotationsHandler;
 use Butterfly\Component\Config\ConfigBuilder;
 use Butterfly\Component\DI\Compiler\Annotation\AnnotationConfigVisitor;
@@ -15,11 +16,12 @@ class PackagesConfig
 
     /**
      * @param string $rootDir
+     * @param IClassParser $classParser
      * @param array $additionalConfigPaths
      * @param array $additionalConfiguration
      * @return array
      */
-    public static function buildForComposer($rootDir, array $additionalConfigPaths = array(), array $additionalConfiguration = array())
+    public static function buildForComposer($rootDir, IClassParser $classParser, array $additionalConfigPaths = array(), array $additionalConfiguration = array())
     {
         $composerAdapter = new ComposerConfigAdapter($rootDir);
         $configBuilder = ConfigBuilder::createInstance();
@@ -33,8 +35,17 @@ class PackagesConfig
         ), $additionalConfiguration));
 
         $annotationPaths = $composerAdapter->getAnnotationDirs();
+
+        $classFinder = new ClassFinder(array('php'));
+
         foreach ($annotationPaths as $annotationDir) {
-            $annotations = ClassParser::createInstance()->parseClassesInDir($annotationDir);
+            $classes = $classFinder->findClassesInDir($annotationDir);
+
+            $annotations = array();
+            foreach ($classes as $class) {
+                $annotations[$class] = $classParser->parseClass($class);
+            }
+
             $configBuilder->addConfiguration(self::convertAnnotations($annotations));
         }
 
