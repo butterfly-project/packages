@@ -45,7 +45,7 @@ class PackagesConfig
             'annotations' => $annotations,
         ));
 
-        return ConfigCompiler::compile($configBuilder->getData());
+        return $configBuilder->getData();
     }
 
     /**
