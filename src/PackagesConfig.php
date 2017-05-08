@@ -17,14 +17,18 @@ class PackagesConfig
     /**
      * @param string $rootDir
      * @param IClassParser $classParser
+     * @param ConfigBuilder $configBuilder
      * @param array $additionalConfigPaths
      * @param array $additionalConfiguration
      * @return array
      */
-    public static function buildForComposer($rootDir, IClassParser $classParser, array $additionalConfigPaths = array(), array $additionalConfiguration = array())
+    public static function buildForComposer($rootDir, IClassParser $classParser, ConfigBuilder $configBuilder = null, array $additionalConfigPaths = array(), array $additionalConfiguration = array())
     {
+        if (null === $configBuilder) {
+            $configBuilder = ConfigBuilder::createInstance();
+        }
+
         $composerAdapter = new ComposerConfigAdapter($rootDir);
-        $configBuilder = ConfigBuilder::createInstance();
 
         $configBuilder->addPaths($composerAdapter->getDiConfigs());
         $configBuilder->addPaths($additionalConfigPaths);

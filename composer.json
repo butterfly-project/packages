@@ -13,14 +13,14 @@
     "require": {
         "php": ">=5.3.3",
 
-        "butterfly/dependency-injection": "2.0.x-dev",
-        "butterfly/config": "1.2.x-dev"
+        "butterfly/dependency-injection": "2.0.x-dev@dev",
+        "butterfly/annotations": "2.0.x-dev@dev",
+        "butterfly/config": "~1.2"
     },
     "autoload": {
         "psr-4": {
             "Butterfly\\Component\\Packages\\": "src/",
             "Butterfly\\Component\\Packages\\Tests\\": "tests/unit/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
