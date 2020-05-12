@@ -2,15 +2,18 @@
 
 namespace Butterfly\Component\Packages\Tests;
 
+use Butterfly\Component\Annotations\ClassParser;
+use Butterfly\Component\Annotations\Parser\PhpDocParser;
 use Butterfly\Component\Packages\PackagesConfig;
 
 class PackagesConfigTest extends \PHPUnit_Framework_TestCase
 {
     public function testBuildForComposer()
     {
-        $dir    = __DIR__ . '/data/config';
+        $dir = __DIR__ . '/data/config';
 
-        $config = PackagesConfig::buildForComposer($dir);
+        $classParser = new ClassParser(new PhpDocParser());
+        $config      = PackagesConfig::buildForComposer($dir, $classParser);
 
         $this->assertEquals($this->getExpectedConfig($dir), $config);
     }
@@ -41,37 +44,68 @@ class PackagesConfigTest extends \PHPUnit_Framework_TestCase
                         'dir' => $dir . '/vendor/butterfly/config',
                     ),
                 ),
+                'annotations' => array(
+                    'Foo\Service1'     => array(
+                        'class'      => array(
+                            'service' => 'service1',
+                        ),
+                        'properties' => array(),
+                        'methods'    => array(),
+                    ),
+                    'Baz\Service2'     => array(
+                        'class'      => array(
+                            'service' => 'service2',
+                        ),
+                        'properties' => array(),
+                        'methods'    => array(),
+                    ),
+                    'Baz\Old\Service3' => array(
+                        'class'      => array(
+                            'service' => 'service3',
+                        ),
+                        'properties' => array(),
+                        'methods'    => array(),
+                    ),
+                    'Bar\Service4'     => array(
+                        'class'      => array(
+                            'service' => 'service4',
+                        ),
+                        'properties' => array(),
+                        'methods'    => array(),
+                    ),
+                    'Project\Service5' => array(
+                        'class'      => array(
+                            'service' => 'service5',
+                        ),
+                        'properties' => array(),
+                        'methods'    => array(),
+                    ),
+                ),
             ),
             'services'   => array(
-                'service1' => array(
+                'foo\service1' => array(
                     'class' => 'Foo\Service1',
-                    'alias' => array('foo\service1'),
                 ),
-                'service2' => array(
+                'baz\service2' => array(
                     'class' => 'Baz\Service2',
-                    'alias' => array('baz\service2'),
                 ),
-                'service3' => array(
+                'baz\old\service3' => array(
                     'class' => 'Baz\Old\Service3',
-                    'alias' => array('baz\old\service3'),
                 ),
-                'service4' => array(
+                'bar\service4' => array(
                     'class' => 'Bar\Service4',
-                    'alias' => array('bar\service4'),
                 ),
-                'service5' => array(
+                'project\service5' => array(
                     'class' => 'Project\Service5',
-                    'alias' => array('project\service5'),
                 ),
             ),
-            'interfaces'         => array(),
-            'interfaces_aliases' => array(),
             'aliases'    => array(
-                'foo\service1'     => 'service1',
-                'baz\service2'     => 'service2',
-                'baz\old\service3' => 'service3',
-                'bar\service4'     => 'service4',
-                'project\service5' => 'service5',
+                'service5.alias' => 'service5',
+                'service1'       => 'foo\service1',
+                'service2'       => 'baz\service2',
+                'service3'       => 'baz\old\service3',
+                'service4'       => 'bar\service4',
+                'service5'       => 'project\service5',
             ),
             'tags'       => array(),
         );

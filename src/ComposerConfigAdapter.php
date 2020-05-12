@@ -163,7 +163,7 @@ class ComposerConfigAdapter
      * @param string $configPath
      * @param bool $isFatal
      * @return bool
-     * @throws \RuntimeException if DI config is not readable
+     * @throws \InvalidArgumentException if DI config is not readable
      */
     protected function checkDiConfigPath($configPath, $isFatal)
     {
@@ -175,7 +175,7 @@ class ComposerConfigAdapter
             return false;
         }
 
-        throw new \RuntimeException(sprintf("DI config '%s' is not readable", $configPath));
+        throw new \InvalidArgumentException(sprintf("DI config '%s' is not readable", $configPath));
     }
 
     /**
