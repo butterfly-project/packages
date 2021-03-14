@@ -29,7 +29,7 @@ class ComposerConfigAdapter
     protected function init()
     {
         $mainConfig      = $this->parseJsonFile($this->baseDir . '/composer.json');
-        $packagesConfigs = $this->parseJsonFile($this->vendorDir . '/composer/installed.json');
+        $packagesConfigs = $this->parseJsonFile($this->vendorDir . '/composer/installed.json')['packages'];
 
         $this->packagesConfigs[self::PROJECT_COMPONENT_NAME] = array(
             'dir' => $this->baseDir
